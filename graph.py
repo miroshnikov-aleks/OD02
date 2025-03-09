@@ -1,32 +1,32 @@
 class Graph:
-    def __init__(self):
-        self.adj_list = []  # Список смежности: [[соседи_0], [соседи_1], ...]
+    def __init__(self, num_vertices):
+        self.V = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
 
-    def add_vertex(self):
-        """Добавляет новую вершину и возвращает её индекс."""
-        self.adj_list.append([])
-        return len(self.adj_list) - 1
-
+    # Добавление ребра между двумя вершинами
     def add_edge(self, u, v):
-        """Добавляет ребро между вершинами u и v (неориентированный граф)."""
-        if u >= len(self.adj_list) or v >= len(self.adj_list):
-            print("Ошибка: вершина не существует")
-            return
         self.adj_list[u].append(v)
-        if u != v:  # Избегаем дублирования для петель
-            self.adj_list[v].append(u)
+        self.adj_list[v].append(u)
 
+    # Печать графа
     def print_graph(self):
-        """Выводит список смежности."""
-        for i, neighbors in enumerate(self.adj_list):
-            print(f"Вершина {i}: {neighbors}")
+        for i in range(self.V):
+            print(f"Вершина {i}: ", end="")
+            for neighbor in self.adj_list[i]:
+                print(f"{neighbor}", end=" ")
+            print()
 
-graph = Graph()
-v0 = graph.add_vertex()  # Вершина 0
-v1 = graph.add_vertex()  # Вершина 1
-v2 = graph.add_vertex()  # Вершина 2
+# Создаем граф с 5 вершинами
+graph = Graph(5)
 
-graph.add_edge(v0, v1)   # Ребро 0-1
-graph.add_edge(v0, v2)   # Ребро 0-2
+# Добавляем ребра
+graph.add_edge(0, 1)
+graph.add_edge(0, 4)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 4)
+graph.add_edge(2, 3)
+graph.add_edge(3, 4)
 
+# Печать графа
 graph.print_graph()
